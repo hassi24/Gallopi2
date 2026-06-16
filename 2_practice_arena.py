@@ -1,7 +1,6 @@
 import streamlit as st
 import time
 import os
-import google.generativeai as genai
 
 # ─────────────────────────────────────────────
 # PAGE CONFIG
@@ -222,17 +221,9 @@ def evaluate_with_gemini(user_text: str, prompt_prefix: str) -> dict:
             "overall_tip": "Try opening with a stronger hook — lead with the problem before the solution to grab attention immediately.",
         }
 
-    try:
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        full_prompt = prompt_prefix + user_text
-        response = model.generate_content(full_prompt)
-        raw = response.text.strip()
-        # Strip possible markdown fences
-        raw = raw.replace("```json", "").replace("```", "").strip()
-        return json.loads(raw)
+   
     except Exception as e:
-        return {
+return {
             "clarity": 70, "warmth": 65, "content": 72, "conciseness": 68,
             "rubric_passed": [0],
             "overall_tip": f"Could not reach Gemini API. Please check your GEMINI_API_KEY. Error: {str(e)[:80]}",
