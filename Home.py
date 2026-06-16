@@ -94,35 +94,27 @@ def onboarding():
                 border_col = "#58cc02" if is_sel else "#203038"
                 bg_col = "#0f2a0f" if is_sel else "#131f24"
                 border_width = "4px" if is_sel else "2px"
+                selected_text = "✅ SELECTED" if is_sel else ""
 
-        selected_text = "✅ SELECTED" if is_sel else ""
+                st.markdown(f"""
+                <div style="
+                    background:{bg_col};
+                    border:{border_width} solid {border_col};
+                    border-radius:18px;
+                    padding:14px 8px;
+                    text-align:center;
+                    margin-bottom:8px;
+        ">
+                    <div style="font-size:40px;margin-bottom:6px;">{emoji}</div>
+                    <div style="font-size:12px;font-weight:800;color:#e8f4f8;">{label}</div>
+                    <div style="font-size:10px;color:#4a6572;margin-top:2px;">{tagline}</div>
+                    <div style="color:#58cc02;font-size:10px;font-weight:900;">
+                         {selected_text}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
 
-        st.markdown(f"""
-<div style="
-    background:{bg_col};
-    border:{border_width} solid {border_col};
-    border-radius:18px;
-    padding:14px 8px;
-    text-align:center;
-    margin-bottom:8px;
-">
-    <div style="font-size:40px;margin-bottom:6px;">{emoji}</div>
-    <div style="font-size:12px;font-weight:800;color:#e8f4f8;">{label}</div>
-    <div style="font-size:10px;color:#4a6572;margin-top:2px;">{tagline}</div>
-    <div style="color:#58cc02;font-size:10px;font-weight:900;">
-        {selected_text}
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-        if st.button(f"Pick {emoji}", key=f"av_{i}", use_container_width=True):
-            st.session_state.avatar = emoji
-            st.session_state.avatar_label = label
-            st.rerun()
-            st.markdown(f"## {emoji}")
-            st.markdown(f"**{label}**")
-            st.caption(tagline)
-            if st.button(f"Pick {emoji}", key=f"av_{i}", use_container_width=True):
+                if st.button(f"Pick {emoji}", key=f"av_{i}", use_container_width=True):
                     st.session_state.avatar = emoji
                     st.session_state.avatar_label = label
                     st.rerun()
